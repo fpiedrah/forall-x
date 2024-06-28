@@ -19,11 +19,18 @@ theorem modus_tollens {P Q: Prop} : ((P → Q) ∧ ¬Q) → ¬P := by
   apply s₂
   exact s₃
 
-theorem double_negation {P: Prop} : ¬¬P → P := by
-  intro h₁
-  by_cases h₂: P
-  . exact h₂
-  . contradiction
+theorem double_negation {P: Prop} : ¬¬P ↔ P := by
+  constructor
+  . intro h₁
+    by_cases h₂: P
+    . exact h₂
+    . contradiction
+  . intro h₁
+    by_cases h₂: P
+    . intro h₃
+      apply h₃
+      exact h₂
+    . contradiction
 
 --  ???
 theorem excluded_middle {P: Prop} : P ∨ ¬P := by

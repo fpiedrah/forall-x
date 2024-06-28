@@ -34,7 +34,7 @@ example {M N O P: Prop}
   . exact s₅
 
 example {X Y Z D: Prop}
-    (p₁: (X ∨ Y) ∨ (X ∨ Z))
+    (_: (X ∨ Y) ∨ (X ∨ Z))
     (p₂: ¬(X ∨ D))
     (p₃: D ∨ M) :
     M := by
