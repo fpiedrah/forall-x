@@ -1,11 +1,11 @@
-theorem excluded_middle {P: Prop} : P ∨ ¬P := by
+example {P: Prop} : P ∨ ¬P := by
   by_cases h₁: P
   . left
     exact h₁
   . right
     exact h₁
 
-theorem de_morgans_and {P Q: Prop} :  ¬(P ∧ Q) ↔ ¬P ∨ ¬Q := by
+example{P Q: Prop} :  ¬(P ∧ Q) ↔ ¬P ∨ ¬Q := by
   constructor
   . intro h₁
     by_cases h₂: P
@@ -24,7 +24,7 @@ theorem de_morgans_and {P Q: Prop} :  ¬(P ∧ Q) ↔ ¬P ∨ ¬Q := by
     | inr h₃ => contradiction
     | inl h₃ => contradiction
 
-theorem de_morgans_or {P Q: Prop} :  ¬(P ∨ Q) ↔ ¬P ∧ ¬Q := by
+example {P Q: Prop} :  ¬(P ∨ Q) ↔ ¬P ∧ ¬Q := by
   constructor
   . intro h₁
     constructor
