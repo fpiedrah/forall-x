@@ -1,7 +1,9 @@
 import Mathlib.Init.Classical
 import ForallX.Rules
 
+-- B. Provide a proof for each of these arguments.
 
+-- 1.  E ∨ F, F ∨ G, ¬F ∴ E ∧ G
 example {E F G: Prop} (p₁: E ∨ F) (p₂: F ∨ G) (p₃: ¬F) : E ∧ G := by
   rw [or_commutative] at p₁
   have s₁: E := disjunctive_syllogism ⟨p₁, p₃⟩
@@ -10,6 +12,7 @@ example {E F G: Prop} (p₁: E ∨ F) (p₂: F ∨ G) (p₃: ¬F) : E ∧ G := b
   . exact s₁
   . exact s₂
 
+-- 2. M ∨ (N → M) ∴ ¬M → ¬N
 example {M N: Prop} (p₁: M ∨ (N → M)) : ¬M → ¬N := by
   intro h₁
   cases p₁ with
@@ -18,6 +21,7 @@ example {M N: Prop} (p₁: M ∨ (N → M)) : ¬M → ¬N := by
       exact s₁
   | inl h₂ => contradiction
 
+-- 3. (M ∨ N) ∧ (O ∨ P), N → P,  ¬P ∴ M ∧ O
 example {M N O P: Prop}
     (p₁: (M ∨ N) ∧ (O ∨ P))
     (p₂: N → P)
@@ -33,6 +37,7 @@ example {M N O P: Prop}
   . exact s₄
   . exact s₅
 
+-- 4. (X ∨ Y) ∨ (X ∨ Z), ¬(X ∨ D), D ∨ M ∴ M
 example {X Y Z D: Prop}
     (_: (X ∨ Y) ∨ (X ∨ Z))
     (p₂: ¬(X ∨ D))

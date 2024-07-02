@@ -1,7 +1,10 @@
 import Mathlib.Init.Classical
 import ForallX.Rules
 
+-- A. Use the strategies to find proofs for each of the
+--    following arguments.
 
+-- 1. A → B, A → C ∴ A → (B ∧ C)
 example {A B: Prop} (p₁: A → B) (p₂: A → C) : A → (B ∧ C) := by
   intro h₁
   have s₁: B := modus_ponens ⟨p₁, h₁⟩
@@ -10,6 +13,7 @@ example {A B: Prop} (p₁: A → B) (p₂: A → C) : A → (B ∧ C) := by
   . exact s₁
   . exact s₂
 
+-- 2. (A ∧ B) → C ∴ A → (B → C)
 example {A B C: Prop} (p₁: (A ∧ B) → C) : A → (B → C) := by
   intro h₁
   intro h₂
@@ -20,6 +24,7 @@ example {A B C: Prop} (p₁: (A ∧ B) → C) : A → (B → C) := by
   have s₂: C := modus_ponens ⟨p₁, s₁⟩
   exact s₂
 
+-- 3.  A → (B → C) ∴ (A → B) → (A → C)
 example {A B C: Prop} (p₁: A → (B → C)) : (A → B) → (A → C) := by
   intro h₁
   intro h₂
@@ -28,6 +33,7 @@ example {A B C: Prop} (p₁: A → (B → C)) : (A → B) → (A → C) := by
   have s₃: C := modus_ponens ⟨s₁, s₂⟩
   exact s₃
 
+-- 4. A ∨ (B ∧ C) ∴ (A ∨ B) ∧ (A ∨ C)
 example {A B C: Prop} (p₁: A ∨ (B ∧ C)) : (A ∨ B) ∧ (A ∨ C) := by
   constructor
   . cases p₁ with
@@ -47,6 +53,7 @@ example {A B C: Prop} (p₁: A ∨ (B ∧ C)) : (A ∨ B) ∧ (A ∨ C) := by
       . left
         exact h₁
 
+-- 5. (A ∧ B) ∨ (A ∧ C) ∴ A ∧ (B ∨ C)
 example {A B C: Prop} (p₁: (A ∧ B) ∨ (A ∧ C)) : A ∧ (B ∨ C) := by
   constructor
   . cases p₁ with
@@ -66,6 +73,7 @@ example {A B C: Prop} (p₁: (A ∧ B) ∨ (A ∧ C)) : A ∧ (B ∨ C) := by
         obtain ⟨_, s₁⟩ := h₁
         exact s₁
 
+-- 6. A ∨ B, A → C, B → D ∴ C ∨ D
 example {A B C D: Prop} (p₁: A ∨ B) (p₂: A → C) (p₃: B → D) : C ∨ D := by
   cases p₁ with
     | inr h₁ =>
@@ -77,6 +85,7 @@ example {A B C D: Prop} (p₁: A ∨ B) (p₂: A → C) (p₃: B → D) : C ∨ 
         have s₁: C := modus_ponens ⟨p₂, h₁⟩
         exact s₁
 
+-- 7. ¬A ∨ ¬B ∴ ¬(A ∧ B)
 example {A B: Prop} (p₁: ¬A ∨ ¬B) : ¬(A ∧ B) := by
   intro h₁
   obtain ⟨s₁, s₂⟩ := h₁
@@ -88,6 +97,7 @@ example {A B: Prop} (p₁: ¬A ∨ ¬B) : ¬(A ∧ B) := by
       . apply h₁
         exact s₁
 
+-- 8. A ∧ ¬B ∴ ¬(A → B)
 example {A B: Prop} (p₁: A ∧ ¬B) : ¬(A → B) := by
   intro h₁
   obtain ⟨s₁, s₂⟩ := p₁
@@ -95,12 +105,20 @@ example {A B: Prop} (p₁: A ∧ ¬B) : ¬(A → B) := by
   have s₃: B := modus_ponens ⟨h₁, s₁⟩
   exact s₃
 
+-- C. Use these strategies to find proofs for each
+--    of the following sentences.
+
+-- 1. ¬A → (A → ⊥)
+-- I don't know how to prove this in Lean, sorry...
+
+-- 2. ¬(A ∧ ¬A)
 example {A: Prop} : ¬(A ∧ ¬A) := by
   intro h₁
   obtain ⟨s₁, s₂⟩ := h₁
   apply s₂
   exact s₁
 
+-- 2. ((A → C) ∧ (B → C)) → ((A ∨ B) → C)
 example {A B C: Prop} : ((A → C) ∧ (B → C)) → ((A ∨ B) → C) := by
   intro h₁
   intro h₂
@@ -113,6 +131,7 @@ example {A B C: Prop} : ((A → C) ∧ (B → C)) → ((A ∨ B) → C) := by
     . have s₃: C := modus_ponens ⟨s₁, h₁⟩
       exact s₃
 
+-- 4. ¬(A → B) → (A ∧ ¬ B)
 example {A B: Prop} : ¬(A → B) → (A ∧ ¬ B) := by
   intro h₁
   constructor
@@ -125,6 +144,7 @@ example {A B: Prop} : ¬(A → B) → (A ∧ ¬ B) := by
     intro _
     exact h₂
 
+-- 5. (¬A ∨ B) → (A → B)
 example {A B: Prop} : (¬A ∨ B) → (A → B) := by
   intro h₁
   cases h₁ with

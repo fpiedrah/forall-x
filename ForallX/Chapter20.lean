@@ -1,12 +1,14 @@
 import Mathlib.Init.Classical
 import ForallX.Rules
 
+-- A. Show that each of the following sentences is a theorem.
 
+-- 1. O → O
 example {O: Prop} : O → O := by
   intro h₁
   exact h₁
 
-
+-- 2. N ∨ ¬N
 example {N: Prop} : N ∨ ¬N := by
   by_cases h₁: N
   . left
@@ -14,6 +16,7 @@ example {N: Prop} : N ∨ ¬N := by
   . right
     exact h₁
 
+-- 3. J ↔ (J ∨ (L ∧ ¬L))
 example {J L: Prop} : J ↔ (J ∨ (L ∧ ¬L)) := by
   constructor
   . intro h₁
@@ -26,6 +29,7 @@ example {J L: Prop} : J ↔ (J ∨ (L ∧ ¬L)) := by
       . obtain ⟨s₁, s₂⟩ := h₂
         contradiction
 
+-- 4. ((A → B) → A) → A
 example {A B: Prop} : ((A → B) → A) → A := by
   intro h₁
   by_contra h₂
@@ -34,6 +38,9 @@ example {A B: Prop} : ((A → B) → A) → A := by
   intro h₃
   contradiction
 
+-- B. Provide proofs for each of the following statements.
+
+-- 1. C → (E ∧ G), ¬C → G ⊢ G
 example {C E G: Prop} (p₁: C → (E ∧ G)) (p₂: ¬C → G) : G := by
   by_cases h₁: G
   . exact h₁
@@ -43,6 +50,19 @@ example {C E G: Prop} (p₁: C → (E ∧ G)) (p₂: ¬C → G) : G := by
     obtain ⟨_, s₃⟩ := s₂
     exact s₃
 
+-- 2. M ∧ (¬N → ¬M) ⊢ (N ∧ M) ∨ ¬M
+example {M N: Prop} (p₁: M ∧ (¬N → ¬M)) : (N ∧ M) ∨ ¬M := by
+  left
+  have ⟨s₁, s₂⟩ := p₁
+  have s₁: ¬¬M := double_negation.mpr (s₁)
+  have s₃: ¬¬N := modus_tollens ⟨s₂, s₁⟩
+  rw [double_negation] at s₁
+  rw [double_negation] at s₃
+  constructor
+  . exact s₃
+  . exact s₁
+
+-- 3. (Z ∧ K) ↔ (Y ∧ M), D ∧ (D → M) ⊢ Y → Z
 example {Z K Y M D: Prop}
     (p₁: (Z ∧ K) ↔ (Y ∧ M))
     (p₂: D ∧ (D → M)) :
@@ -60,6 +80,7 @@ example {Z K Y M D: Prop}
   obtain ⟨s₈, _⟩ := s₇
   exact s₈
 
+-- 4. (W ∨ X) ∨ (Y ∨ Z), X → Y, ¬Z ⊢ W ∨ Y
 example {W X Y Z: Prop}
     (p₁: (W ∨ X) ∨ (Y ∨ Z))
     (p₂: X → Y)
@@ -81,6 +102,7 @@ example {W X Y Z: Prop}
         . right
           exact h₂
       | inr h₂ => contradiction
+
 
 example {R E: Prop} : (R ↔ E) ↔ (E ↔ R) := by
   constructor
